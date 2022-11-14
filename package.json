@@ -1,0 +1,11 @@
+{
+  "name": "curso-mean2",
+  "version": "1.0.0",
+  "description": "Proyecto de Api rest udemy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Claudio",
+  "license": "MIT"
+}
