@@ -83,8 +83,27 @@ function loginUser(req, res){
     })
 }
 
+function updateUser (req, res){
+    let userId  = req.params.id;
+    let update  =req.body;
+
+    //Capturamos la información con los metodos de User
+    User.findByIdAndUpdate(userId, update, (err, userUpdate) => {
+        if(err){
+            res.status(500).send({message: 'Error al actualizar datos de user'})
+        }else{
+            if (!userUpdate ){
+                res.status(404).send ({message: 'No se ha podido acutalizar el usuario'});
+            }else{
+                res.status(200).send({user: userUpdate})
+            }
+        }
+    });
+}
+
 module.exports = {
     pruebas,
     saveUser,
-    loginUser
+    loginUser,
+    updateUser
 };
