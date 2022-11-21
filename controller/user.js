@@ -3,7 +3,9 @@
 const bcrypt = require('bcrypt-nodejs');
 const { restart } = require('nodemon');
 const User = require('../models/user');
-const jwt = require ('../services/jwt')
+const jwt = require ('../services/jwt');
+const fs = require ('fs');
+const path = require ('path');
 
 function pruebas (req, res){
     res.status(200).send({
@@ -107,11 +109,39 @@ function uploadImage (req, res){
 
     if(req.files){
         let file_path = req.files.image.path; 
+        let file_split = file_path.split('\\')
+        let file_name = file_split[2];
+        let ext_split = file_name.split('\.')
+        let file_ext = ext_split[1]
 
+        if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif' ){
+
+            User.findByIdAndUpdate(userId, {image: file_name}, (err, userUpdate) =>{
+                if (!userUpdate ){
+                    res.status(404).send ({message: 'No se ha podido acutalizar el usuario'});
+                }else{
+                    res.status(200).send({user: userUpdate})}
+            });
+
+        }else {
+            res.status(200).send({message: 'Extensión del archivo no valida'})
+        }
         console.log(file_path);
     }else{
         req.status(200).send({message: 'No has subido ninguna imagen...'})
     }
+}
+
+function getImageFile(req, res){
+    let imageFile = req.params.imageFile;
+    let path_file = './uploads/users/'+imageFile
+    fs.exists(path_file, function(exists){
+        if(exists){
+            res.sendFile(path.resolve(path_file));
+        }else{
+            res.status(200).send({message: 'No existe la imagen'});
+        }
+    });
 }
 
 module.exports = {
@@ -119,5 +149,6 @@ module.exports = {
     saveUser,
     loginUser,
     updateUser,
-    uploadImage
+    uploadImage,
+    getImageFile
 };
