@@ -6,6 +6,9 @@ const userController = require('../controller/user');
 const api = express.Router();
 const md_auth = require ('../middlewares/authenticated');
 
+const multipart = require ('connect-multiparty');
+const md_upload = multipart({ uploadDir: './uploads/users'}); 
+
 /*Enviando peticion al controlador con un req (ej: req.method (get) .url/probando-controlador) 
 y un res declarado en el contraldor con un mensaje y un status*/
 api.get('/probando-controlador', md_auth.ensureAuth ,userController.pruebas);
