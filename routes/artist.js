@@ -8,6 +8,8 @@ const md_auth = require('../middlewares/authenticated');
 api.get('/artist/:id',md_auth.ensureAuth, artistController.getArtist);
 api.get('/artists/:page?',md_auth.ensureAuth, artistController.getArtists);
 
+api.put('/artists/:id',md_auth.ensureAuth, artistController.updateArtist);
+
 api.post('/artist',md_auth.ensureAuth, artistController.saveArtist);
 
 module.exports = api;
