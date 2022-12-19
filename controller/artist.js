@@ -70,7 +70,7 @@ function updateArtist(req, res){
     let artistId  =req.params.id;
     let update = req.body; 
 
-    Artist.findByIdAndUpdate(artistId, update, ()=>{
+    Artist.findByIdAndUpdate(artistId, update, (err, artistUpdated)=>{
         if (err){
             res.status(500).send({message: 'Error al actualiuzar artista'});
         }else{
