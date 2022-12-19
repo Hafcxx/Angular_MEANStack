@@ -12,4 +12,6 @@ api.put('/artists/:id',md_auth.ensureAuth, artistController.updateArtist);
 
 api.post('/artist',md_auth.ensureAuth, artistController.saveArtist);
 
+api.delete('/artists/:id',md_auth.ensureAuth, artistController.deleteArtist);
+
 module.exports = api;
