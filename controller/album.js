@@ -8,6 +8,30 @@ const Album = require ('../models/album');
 const Song = require ('../models/song');
 const { restart } = require('nodemon');
 
+function getAlbums (req, res){
+    let artistsId = req.params.artist;
+
+    if(!artistsId){
+        //sacar todos los albums de db
+        var find = Album.find({}).sort('title');
+    }else{
+        //sacar todos los albums del artista
+        var find = Album.find({artist: artistsId}).sort('year');
+    }
+
+    find.populate({path: 'artist'}).exec((err, albums) =>{
+        if(err){
+            res.status(500).send({message: 'Error en la petición'});
+        }else{
+            if(!albums){
+                res.status(404).send({message: 'No hay albums'});
+            }else{
+                res.status(200).send({albums});
+            }
+        }
+    });
+}
+
 function getAlbum(req, res){
     let albumId = req.params.id;
 
@@ -48,5 +72,6 @@ function saveAlbum (req, res){
 
 module.exports = {
     getAlbum,
-    saveAlbum
+    saveAlbum,
+    getAlbums
 };
