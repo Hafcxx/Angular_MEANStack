@@ -6,9 +6,22 @@ const mongoosePaginate  = require('mongoose-pagination');
 const Artist = require ('../models/artist');
 const Album = require ('../models/album');
 const Song = require ('../models/song');
+const { restart } = require('nodemon');
 
 function getAlbum(req, res){
-    res.status(200).send({message: 'Accion get'})
+    let albumId = req.params.id;
+
+    Album.findById(albumId).populate({path: 'artist'}).exec((err, album)=>{
+        if (err){
+            res.status(500).send({message: 'Error en la id'});
+        }else {
+            if(!album){
+                res.status(404).send({message: 'No existe el album'});
+            }else{
+                res.status(200).send({album})
+            }
+        }
+    })
 }
 
 function saveAlbum (req, res){
