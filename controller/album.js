@@ -8,6 +8,23 @@ const Album = require ('../models/album');
 const Song = require ('../models/song');
 const { restart } = require('nodemon');
 
+function updateAlbum (req, res){
+    let albumId = req.params.id;
+    let update = req.body; 
+
+    Album.findByIdAndUpdate(albumId, update, (err, albumUpdated) => {
+        if (err){
+            res.status(500).send({message: 'Error en el servidor '});
+        }else {
+            if(!albumUpdated){
+                res.status(404).send({message: 'No existe el album'});
+            }else{
+                res.status(200).send({album: albumUpdated})
+            }
+        }
+    });
+}
+
 function getAlbums (req, res){
     let artistsId = req.params.artist;
 
@@ -73,5 +90,6 @@ function saveAlbum (req, res){
 module.exports = {
     getAlbum,
     saveAlbum,
-    getAlbums
+    getAlbums,
+    updateAlbum
 };
