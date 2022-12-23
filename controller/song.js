@@ -52,18 +52,18 @@ function getImageFile(req, res){
     });
 }
 
-function updateAlbum (req, res){
-    let albumId = req.params.id;
+function updateSong (req, res){
+    let songId = req.params.id;
     let update = req.body; 
 
-    Album.findByIdAndUpdate(albumId, update, (err, albumUpdated) => {
+    Song.findByIdAndUpdate(songId, update, (err, songUpdated) => {
         if (err){
             res.status(500).send({message: 'Error en el servidor '});
         }else {
-            if(!albumUpdated){
-                res.status(404).send({message: 'No existe el album'});
+            if(!songUpdated){
+                res.status(404).send({message: 'No existe la canción'});
             }else{
-                res.status(200).send({album: albumUpdated})
+                res.status(200).send({song: songUpdated})
             }
         }
     });
@@ -159,4 +159,5 @@ module.exports = {
     getSong,
     getSongs,
     saveSong,
+    updateSong
 };
