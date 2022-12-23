@@ -8,27 +8,27 @@ const Album = require ('../models/album');
 const Song = require ('../models/song');
 const { restart } = require('nodemon');
 
-function uploadImage (req, res){
-    let albumId = req.params.id;
+function uploadFile (req, res){
+    let songId = req.params.id;
     let file_name = 'No subido...';
 
     if(req.files){
-        let file_path = req.files.image.path; 
+        let file_path = req.files.file.path; 
         let file_split = file_path.split('\\')
         let file_name = file_split[2];
         let ext_split = file_name.split('\.')
         let file_ext = ext_split[1]
 
-        if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif' ){
+        if(file_ext == 'mp3' || file_ext == 'ogg' ){
 
-            Album.findByIdAndUpdate(albumId, {image: file_name}, (err, albumUpdate) =>{
-                if (!albumUpdate ){
+            Song.findByIdAndUpdate(songId, {file: file_name}, (err, songUpdated) =>{
+                if (!songUpdated ){
                         res.status(404).send ({message: 'No se ha podido acutalizar el usuario'});
                 }else{
                     if(err){
                         res.status(500).send (err);
                     }else{
-                    res.status(200).send({album: albumUpdate})}
+                    res.status(200).send({song: songUpdated})}
                 }
             });
 
@@ -40,14 +40,14 @@ function uploadImage (req, res){
     }
 }
 
-function getImageFile(req, res){
-    let imageFile = req.params.imageFile;
-    let path_file = './uploads/albums/'+imageFile
+function getSongFile(req, res){
+    let songFile = req.params.songFile;
+    let path_file = './uploads/songs/'+songFile
     fs.exists(path_file, function(exists){
         if(exists){
             res.sendFile(path.resolve(path_file));
         }else{
-            res.status(200).send({message: 'No existe la imagen'});
+            res.status(200).send({message: 'No existe la cancion'});
         }
     });
 }
@@ -130,27 +130,17 @@ function saveSong (req, res){
     });
 }
 
-function deleteAlbum (req, res){
-    let albumId = req.params.id;
+function deleteSong (req, res){
+    let songId = req.params.id;
 
-    Album.findByIdAndRemove(albumId, (err, albumRemoved)=>{
+    Song.findByIdAndRemove(songId, (err, songRemoved)=>{
         if (err){
             res.status(500).send({message: 'Error al borrar'});
         }else {
-            if (!albumRemoved){
+            if (!songRemoved){
                 res.status(404).send({message: 'Album no encontrado'});
             }else {
-                Song.find({album: albumRemoved._id}).remove((err, songRemoved)=>{
-                    if (err){
-                        res.status(500).send({message: 'Error al borrar cancion'});
-                    }else {
-                        if (!songRemoved){
-                            res.status(404).send({message: 'Cancion no encontrado'});
-                        }else {
-                            res.status(200).send ({album: albumRemoved});
-                        };
-                    };
-                });
+               res.status(200).send({song: songRemoved});
             };                
         };
     });
@@ -159,5 +149,8 @@ module.exports = {
     getSong,
     getSongs,
     saveSong,
-    updateSong
+    updateSong,
+    deleteSong,
+    uploadFile,
+    getSongFile
 };

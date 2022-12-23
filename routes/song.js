@@ -13,9 +13,13 @@ const md_upload = multipart({ uploadDir: './uploads/songs'});
 y un res declarado en el contraldor con un mensaje y un status*/
 api.get('/song/:id', md_auth.ensureAuth ,songController.getSong);
 api.get('/songs/:album?', md_auth.ensureAuth ,songController.getSongs);
+api.get('/get-song-file/:songFile', songController.getSongFile);
 
+api.post('/upload-file-song/:id', [md_auth.ensureAuth, md_upload], songController.uploadFile);
 api.post('/song', md_auth.ensureAuth ,songController.saveSong);
 
 api.put('/song/:id', md_auth.ensureAuth ,songController.updateSong);
+
+api.delete('/song/:id', md_auth.ensureAuth ,songController.deleteSong);
 
 module.exports = api;
