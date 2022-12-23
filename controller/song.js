@@ -70,17 +70,23 @@ function updateAlbum (req, res){
 }
 
 function getSongs (req, res){
-    let songId = req.params.id;
+    let albumId = req.params.album;
+    let find;
+    if(!albumId){
+        find = Song.find({}).sort('id');
+    }else{
+        find = Song.find({album: albumId}).sort('number');
+    }
 
-
-    find.populate({path: 'artist'}).exec((err, albums) =>{
+    find.populate({path: 'album', populate: {path: 'artist', model: 'Artist'}})
+    .exec((err, songs) =>{
         if(err){
             res.status(500).send({message: 'Error en la petición'});
         }else{
-            if(!albums){
-                res.status(404).send({message: 'No hay albums'});
+            if(!songs){
+                res.status(404).send({message: 'No hay canciones'});
             }else{
-                res.status(200).send({albums});
+                res.status(200).send({songs});
             }
         }
     });
@@ -89,14 +95,14 @@ function getSongs (req, res){
 function getSong(req, res){
     let songId = req.params.id;
 
-    Song.findById(songId).populate({path: 'artist'}).exec((err, album)=>{
+    Song.findById(songId).populate({path: 'album'}).exec((err, song)=>{
         if (err){
             res.status(500).send({message: 'Error en la id'});
         }else {
-            if(!album){
-                res.status(404).send({message: 'No existe el album'});
+            if(!song){
+                res.status(404).send({message: 'No existe la canción'});
             }else{
-                res.status(200).send({album})
+                res.status(200).send({song})
             }
         }
     })
@@ -151,5 +157,6 @@ function deleteAlbum (req, res){
 }
 module.exports = {
     getSong,
+    getSongs,
     saveSong,
 };
