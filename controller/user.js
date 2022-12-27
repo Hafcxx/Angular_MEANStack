@@ -120,7 +120,7 @@ function uploadImage (req, res){
                 if (!userUpdate ){
                     res.status(404).send ({message: 'No se ha podido acutalizar el usuario'});
                 }else{
-                    res.status(200).send({user: userUpdate})}
+                    res.status(200).send({image: file_name, user: userUpdate})}
             });
 
         }else {
