@@ -18,4 +18,8 @@ export class AppComponent {
     this.identity = true; 
     this.token = "";
   }
+
+  public onSubmit(){
+    console.log(this.user);
+  }
 }
