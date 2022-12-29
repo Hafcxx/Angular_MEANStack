@@ -13,7 +13,7 @@ export class UserService{
         this.url = GLOBAL.url;
       };
 
-    signUp(user_to_login:any, gethash = null){
+    signUp(user_to_login:any, gethash?: any){
 
         if(gethash !=null){
             user_to_login.gethash = gethash;
@@ -27,6 +27,6 @@ export class UserService{
         });
 
         return this._http.post(this.url+'login', params, {headers: headers})
-                        .pipe(map((res: any) => res.json))
+                        .pipe(map((res) => res))
     }
 };
