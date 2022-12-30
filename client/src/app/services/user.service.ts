@@ -40,6 +40,18 @@ export class UserService{
                         .pipe(map((res) => res));
     }
 
+    update_user(user_to_update: any){
+      let params = JSON.stringify(user_to_update);
+
+      let headers = new HttpHeaders({
+        'Content-Type':'application/json',
+        'Authorization': this.getToken()
+      });
+
+      return this._http.put(this.url+'update-user/'+user_to_update._id, params, {headers: headers})
+                      .pipe(map((res) => res));
+    }
+
     getIdentity (){
         let identityString = localStorage.getItem('identity')+"";
         let identity;

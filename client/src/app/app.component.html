@@ -9,21 +9,44 @@
 
 <div *ngIf="identity" class = "row">
   <h1>{{title}}</h1>
+  <nav id="navigation">
+    <a href="#">
+    <span class ="glyphicon glyphicon-search" aria-hidden="true">
+      Buscar
+    </span>
+  </a><a href="#">
+    <span class ="glyphicon glyphicon-star" aria-hidden="true">
+      Artistas
+    </span>
+  </a><a href="#">
+    <span class ="glyphicon glyphicon-book" aria-hidden="true">
+      Albums
+    </span>
+  </a>
+    
+  </nav>
 
-  <span>
-    {{identity.email}} {{identity.surname}}
-  </span>
+  <nav id="user_logged">
+    <span>
+      {{identity.email}} {{identity.surname}}
+    </span>
 
-  <span class="btn btn-warning" (click)="logout()">
-    Cerrar sesión
-  </span>
-
+    <span class="btn btn-warning" (click)="logout()">
+      Cerrar sesión
+    </span>
+    <a [routerLink]="['/mis-datos']">
+      <span class ="glyphicon glyphicon-cog" aria-hidden="true">
+        Mis datos
+      </span>
+    </a>
+  </nav>
 </div>
 
 <div class="clearfix"></div>
 
 <div *ngIf="identity" class = "central col-lg-11">
   <p>Estas logueado en la aplicación</p>
+  <router-outlet></router-outlet>
 </div>
 
 <div class="row m-2" *ngIf="!identity" >
