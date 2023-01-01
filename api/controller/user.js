@@ -6,6 +6,7 @@ const User = require('../models/user');
 const jwt = require ('../services/jwt');
 const fs = require ('fs');
 const path = require ('path');
+const user = require('../models/user');
 
 function pruebas (req, res){
     res.status(200).send({
@@ -89,6 +90,9 @@ function updateUser (req, res){
     let userId  = req.params.id;
     let update  =req.body;
 
+    if (userId != req.user.sub){
+       return res.status(500).send({message: 'No tienes permiso para actualizar este usuario'});
+    }
     //Capturamos la información con los metodos de User
     User.findByIdAndUpdate(userId, update, (err, userUpdate) => {
         if(err){

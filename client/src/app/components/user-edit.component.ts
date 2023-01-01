@@ -10,23 +10,52 @@ import { User } from '../models/user';
 
 export class UserEditComponent implements OnInit{
     public titulo: string;
-    public user;
+    public user: User;
     public identity;
     public token;
+    public alertUpdate = "";
+    public errorMessage: any;
 
     constructor(
         private _userService: UserService
     ){
-        this.titulo = 'Actualizar mis datos';
-        this.user = new User ('', '', '', '', '' ,'ROLE_USER','');
-        this.identity = '';
-        this.token = '';
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
+        
+        this.user = this.identity;
+        this.alertUpdate;
+        this.titulo = ""; 
+        this.errorMessage;
+
+        // LocalStorage
+
     }
 
 
     ngOnInit(): void {
-        
+        console.log('user-edit.componentn.ts cargado')
+    }
+
+    onSubmit(){
+        console.log(this.user);
+
+        this._userService.update_user(this.user).subscribe({
+            next: (v:any) => {
+                this.user = v.user;
+
+                if(!v.user){
+                    this.errorMessage = 'El usuario no se ha actualizado';
+                }else {
+                    this.user = v.user; 
+                    localStorage.setItem('identity', JSON.stringify(v.user));
+                    this.errorMessage = 'actualizado correctamente';
+                }
+            },
+            error: (e) => {
+                this.errorMessage = e.error.message;
+                console.log(e);
+            },
+            complete: () => {}
+        });
     }
 }
