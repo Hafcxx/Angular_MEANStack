@@ -7,128 +7,133 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<div *ngIf="identity" class = "row">
-  <h1>{{title}}</h1>
-  <nav id="navigation">
-    <a href="#">
-    <span class ="glyphicon glyphicon-search" aria-hidden="true">
-      Buscar
-    </span>
-  </a><a href="#">
-    <span class ="glyphicon glyphicon-star" aria-hidden="true">
-      Artistas
-    </span>
-  </a><a href="#">
-    <span class ="glyphicon glyphicon-book" aria-hidden="true">
-      Albums
-    </span>
-  </a>
-    
-  </nav>
-
-  <nav id="user_logged">
-    <div class= "user_image" *ngIf="identity.image && identity.image != 'null'">
-      <img src="{{url + 'get-image-user/' +identity.image}}" style=" width: 50px;"/>
-
-    </div>
-    <span>
-      {{identity.email}} {{identity.surname}}
-    </span>
-
-    <span class="btn btn-warning" (click)="logout()">
-      Cerrar sesión
-    </span>
-    <a [routerLink]="['/mis-datos']">
-      <span class ="glyphicon glyphicon-cog" aria-hidden="true">
-        Mis datos
+<div *ngIf="identity" class = "d-flex">
+  <div class = "navigation" style="height: 100%" >
+  <h1 class="head-title">
+    <a [routerLink]="['/']">
+    {{title}}
+    </a>
+  </h1>
+  <div class="" >
+    <a href="#" style="display: block" >
+      <span class ="glyphicon glyphicon-search" aria-hidden="true">
+        Buscar
+      </span>
+    </a><a href="#" style="display: block" >
+      <span class ="glyphicon glyphicon-star" aria-hidden="true">
+        Artistas
+      </span>
+    </a><a href="#" style="display: block" >
+      <span class ="glyphicon glyphicon-book" aria-hidden="true">
+        Albums
       </span>
     </a>
-  </nav>
-</div>
-
-<div class="clearfix"></div>
-
-<div *ngIf="identity" class = "central col-lg-11">
-  <p>Estas logueado en la aplicación</p>
-  <router-outlet></router-outlet>
-</div>
-
-<div class="row m-2" *ngIf="!identity" >
-  <div class="col-5">
-      <h1>Identificate</h1>
-      <div *ngIf="errorMessage">
-        <div class="alert alert-danger" role="alert">
-          <strong>Error</strong> {{errorMessage}}
-        </div>
-
-      </div>
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="col-8">
-
-        {{ loginForm.value | json }}
-        <p>
-          <label>Correo: </label>
-          <input type="email" #email="ngModel" name="email" [(ngModel)]="user.email" 
-          class="form-control" required />
-          <span *ngIf="!email.valid && email.touched">
-            El email es obligatorio
-          </span>
-        </p>
-
-        <p>
-          <label>Contraseña: </label>
-          <input type="password" #password="ngModel" name = "password" [(ngModel)]="user.password" class="form-control" required>
-        </p>
-
-        <input type="submit" value="Entrar" class="btn btn-primary">
-      </form>
   </div>
   
-  <div class="col-6">
-      <h1>Registrate</h1>
-      <div *ngIf="errorRegister">
-        <div class="alert alert-danger" role="alert">
-          <strong>Error</strong> {{errorRegister}}
-        </div>
+  <div class="">
+    <nav id="user_logged" style="align-items: center">
+      <div class= "user_image" *ngIf="identity.image && identity.image != 'null'">
+        <img src="{{url + 'get-image-user/' +identity.image}}" style=" width: 50px;"/>
 
       </div>
-      <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="col-6">
+      <span >
+        {{identity.email}} {{identity.surname}}
+      </span>
 
-        <p>
-          <label>Nombre: </label>
-          <input type="text" #name="ngModel" name="name" [(ngModel)]="user_register.name" class="form-control" required>
-          <span *ngIf="!name.valid && name.touched">
-            El nombre es obligatorio
-          </span>
-        </p>
-
-        <p>
-          <label>Apellido: </label>
-          <input type="text" #surname="ngModel" name="surname" [(ngModel)]="user_register.surname" class="form-control" required>
-        </p>
-          <span *ngIf="!surname.valid && surname.touched">
-            El apellido es obligatorio
-          </span>
-        <p>
-          <label>Correo: </label>
-          <input type="text" #email="ngModel" name="email" [(ngModel)]="user_register.email" class="form-control" required>
-
-          <span *ngIf="!email.valid && email.touched">
-            El email es obligatorio
-          </span>
-        </p>
-
-        <p>
-          <label>Contraseña: </label>
-          <input type="password" #password="ngModel" name="password" [(ngModel)]="user_register.password" class="form-control" required>
-        </p>
-          <span *ngIf="!password.valid && password.touched">
-            La contraseña es obligatoria
-          </span>
-
-        <input type="submit" value="Registrar" class="btn btn-primary">
-      </form>
+      <span class="btn btn-warning" style="display: block" (click)="logout()">
+        Salir
+      </span>
+      <a [routerLink]="['/mis-datos']">
+        <span class ="glyphicon glyphicon-cog" aria-hidden="true">
+          Mis datos
+        </span>
+      </a>
+    </nav>
+    </div>
   </div>
 
+
+  <div *ngIf="identity" class = "">
+    <router-outlet></router-outlet>
+  </div>  
+
+  <div class="" *ngIf="!identity" >
+    <div class="">
+        <h1>Identificate</h1>
+        <div *ngIf="errorMessage">
+          <div class="alert alert-danger" role="alert">
+            <strong>Error</strong> {{errorMessage}}
+          </div>
+
+        </div>
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="">
+
+          {{ loginForm.value | json }}
+          <p>
+            <label>Correo: </label>
+            <input type="email" #email="ngModel" name="email" [(ngModel)]="user.email" 
+            class="form-control" required />
+            <span *ngIf="!email.valid && email.touched">
+              El email es obligatorio
+            </span>
+          </p>
+
+          <p>
+            <label>Contraseña: </label>
+            <input type="password" #password="ngModel" name = "password" [(ngModel)]="user.password" class="form-control" required>
+          </p>
+
+          <input type="submit" value="Entrar" class="btn btn-primary">
+        </form>
+    </div>
+    
+    <div class="">
+        <h1>Registrate</h1>
+        <div *ngIf="errorRegister">
+          <div class="alert alert-danger" role="alert">
+            <strong>Error</strong> {{errorRegister}}
+          </div>
+
+        </div>
+        <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()" class="">
+
+          <p>
+            <label>Nombre: </label>
+            <input type="text" #name="ngModel" name="name" [(ngModel)]="user_register.name" class="form-control" required>
+            <span *ngIf="!name.valid && name.touched">
+              El nombre es obligatorio
+            </span>
+          </p>
+
+          <p>
+            <label>Apellido: </label>
+            <input type="text" #surname="ngModel" name="surname" [(ngModel)]="user_register.surname" class="form-control" required>
+          </p>
+            <span *ngIf="!surname.valid && surname.touched">
+              El apellido es obligatorio
+            </span>
+          <p>
+            <label>Correo: </label>
+            <input type="text" #email="ngModel" name="email" [(ngModel)]="user_register.email" class="form-control" required>
+
+            <span *ngIf="!email.valid && email.touched">
+              El email es obligatorio
+            </span>
+          </p>
+
+          <p>
+            <label>Contraseña: </label>
+            <input type="password" #password="ngModel" name="password" [(ngModel)]="user_register.password" class="form-control" required>
+          </p>
+            <span *ngIf="!password.valid && password.touched">
+              La contraseña es obligatoria
+            </span>
+
+          <input type="submit" value="Registrar" class="btn btn-primary">
+        </form>
+    </div>
+
+  </div>
 </div>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
