@@ -19,7 +19,7 @@
       <span class ="glyphicon glyphicon-search" aria-hidden="true">
         Buscar
       </span>
-    </a><a href="#" style="display: block" [routerLink]="['/artists',1]">
+    </a><a href="#" style="display: block" [routerLink]="['/artists',1]" [routerLinkActive]="['actived']">
       <span class ="glyphicon glyphicon-star" aria-hidden="true">
         Artistas
       </span>
@@ -43,7 +43,7 @@
       <span class="btn btn-warning" style="display: block" (click)="logout()">
         Salir
       </span>
-      <a [routerLink]="['/mis-datos']">
+      <a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']">
         <span class ="glyphicon glyphicon-cog" aria-hidden="true">
           Mis datos
         </span>
@@ -57,7 +57,7 @@
   <router-outlet></router-outlet>
   </div> 
 
-  <div class="" [class.hidden]="!identity" >
+  <div class="" *ngIf="!identity" >
     <div class="">
         <h1>Identificate</h1>
         <div *ngIf="errorMessage">

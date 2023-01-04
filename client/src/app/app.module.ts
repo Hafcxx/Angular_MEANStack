@@ -5,6 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { routing, appRoutingProviders } from './app.routing';
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home-component';
 import { UserEditComponent } from './components/user-edit.component';
 import { ArtistListComponent } from './components/artist-list.component';
 
@@ -12,7 +13,8 @@ import { ArtistListComponent } from './components/artist-list.component';
   declarations: [
     AppComponent,
     UserEditComponent,
-    ArtistListComponent
+    ArtistListComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
