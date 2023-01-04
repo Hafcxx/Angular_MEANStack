@@ -7,8 +7,8 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<div *ngIf="identity" class = "d-flex">
-  <div class = "navigation" style="height: 100%" >
+<div  class = "d-flex" style="height: 100%">
+  <div *ngIf="identity" class = "navigation" style="height: 100%; padding:10px" >
   <h1 class="head-title">
     <a [routerLink]="['/']">
     {{title}}
@@ -19,7 +19,7 @@
       <span class ="glyphicon glyphicon-search" aria-hidden="true">
         Buscar
       </span>
-    </a><a href="#" style="display: block" >
+    </a><a href="#" style="display: block" [routerLink]="['/artists',1]">
       <span class ="glyphicon glyphicon-star" aria-hidden="true">
         Artistas
       </span>
@@ -53,11 +53,11 @@
   </div>
 
 
-  <div *ngIf="identity" class = "">
-    <router-outlet></router-outlet>
-  </div>  
+  <div [class.hidden]="!identity" class = "">
+  <router-outlet></router-outlet>
+  </div> 
 
-  <div class="" *ngIf="!identity" >
+  <div class="" [class.hidden]="!identity" >
     <div class="">
         <h1>Identificate</h1>
         <div *ngIf="errorMessage">
