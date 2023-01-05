@@ -12,7 +12,7 @@ api.get('/artist/:id',md_auth.ensureAuth, artistController.getArtist);
 api.get('/artists/:page?',md_auth.ensureAuth, artistController.getArtists);
 api.get('/get-image-artist/:imageFile', artistController.getImageFile);
 
-api.put('/artists/:id',md_auth.ensureAuth, artistController.updateArtist);
+api.put('/artist/:id',md_auth.ensureAuth, artistController.updateArtist);
 
 api.post('/artist',md_auth.ensureAuth, artistController.saveArtist);
 api.post('/upload-image-artist/:id', [md_auth.ensureAuth, md_upload], artistController.uploadImage);

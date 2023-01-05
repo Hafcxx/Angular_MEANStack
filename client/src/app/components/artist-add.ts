@@ -16,6 +16,7 @@ export class ArtistAddComponent implements OnInit{
     public artist: Artist;
     public identity;
     public token;
+    public is_edit: boolean;
     public url: string;
     public errorMessage: string;
 
@@ -31,6 +32,7 @@ export class ArtistAddComponent implements OnInit{
         this.url = GLOBAL.url;
         this.artist = new Artist('','','');
         this.errorMessage = "";
+        this.is_edit =false;
 
     }
 
@@ -48,7 +50,7 @@ export class ArtistAddComponent implements OnInit{
                 }else {
                     this.artist = v.artist;
                     this.errorMessage = "El artista se ha creado correctamente";
-                    //this._router.navigate(['/editar-artista'], v.artist._id)
+                    this._router.navigate(['/edit-artist', v.artist._id])
                 }
             },
             error : (e:any) =>{
@@ -59,5 +61,9 @@ export class ArtistAddComponent implements OnInit{
 
             }
         })
+    }
+
+    fileChangeEvent (event:any){
+        console.log("");
     }
 }

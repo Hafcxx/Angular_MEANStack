@@ -1,4 +1,4 @@
-<div class="col-6" *ngIf="identity && identity.role == 'ROLE_ADMIN'">
+<div class="col-6">
   <h1>
     {{titulo}}
   </h1>
@@ -11,9 +11,9 @@
 
   <form #formArtist="ngForm" (ngSubmit)="onSubmit()" >
     <p>
-      {{artist}}
+      
       <label>Nombre</label>
-      <input type="text" #name="ngModel" name="name" [(ngModel)]="artist.name" required class="form-control"/>
+      <input type="text" #name="ngModel" name="name" [(ngModel)]="artist.name" required class="form-control" />
       <span *ngIf="!name.valid && name.touched">
         El nombre es obligatorio
       </span>
