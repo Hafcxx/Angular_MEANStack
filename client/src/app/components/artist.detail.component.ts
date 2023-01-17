@@ -2,24 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { ArtistService } from '../services/artist.service';
-
 import { Artist } from '../models/artist';
 import {GLOBAL} from '../services/global';
 
 @Component ({
-    selector: 'artist-list',
-    templateUrl: '../views/artist-list.html',
+    selector: 'artist-detail',
+    templateUrl: '../views/artist-detail.html',
     providers: [UserService, ArtistService]
 })
 
-export class ArtistListComponent implements OnInit{
+export class ArtistDetailComponent implements OnInit{
     public titulo: string; 
-    public artists: Artist[];
     public identity;
     public token;
+    public artist: Artist;
     public url: string;
-    public next_page;
-    public prev_page;
+    public errorMessage: string;
+    public is_edit;
+    public filesToUpload: Array<File>;
 
     constructor (
         private _route: ActivatedRoute,
@@ -27,56 +27,49 @@ export class ArtistListComponent implements OnInit{
         private _userService: UserService,
         private _artistService: ArtistService
     ) {
-        this.titulo = 'Artistas';
+        this.titulo = 'Editar arista';
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.url = GLOBAL.url;
-        this.artists = [];
-        this.next_page=1;
-        this.prev_page=1;
+        this.errorMessage = "";
+        this.is_edit = true;
+        this.filesToUpload = [];
+        this.artist = new Artist(0,'','','');
 
     }
 
     ngOnInit (){
         console.log('artist-list.component cargado');
-
-        //Conseguir el listado de artistas
-        this.getArtists();
-        
+        this.getArtist();
     }
 
-    getArtists(){
+    getArtist(){
         this._route.params.forEach((params: Params) =>{
-            let page = +params['page'];
-            if(!page){
-                page =1;
-            }else{
-                this.next_page = page+1;
-                this.prev_page = page-2;
+            let id = params['id'];
 
-                if(this.prev_page == 0){
-                    this.prev_page = 1;
-                }
-            }
-            let stringPage = page.toString();
-
-            this._artistService.getArtists(this.token, stringPage).subscribe({
+            this._artistService.getArtist(this.token, id).subscribe({
                 next: (v:any) => {
                     
                     if(!v.artist){
-                        this._router.navigate(['/']);
+                        this._router.navigate(['/'])
                     }else {
-                        this.artists = v.artist;
-                        console.log(this.artists);
+                        this.artist = v.artist;
+                        console.log(this.artist);
+                        //this._router.navigate(['/editar-artista'], v.artist._id)
                     }
                 },
                 error : (e:any) =>{
+                    this.errorMessage = e.error.message;
                     console.log(e);
                 },
                 complete :() =>{
     
                 }
-            });
+            })
+
         });
     }
+
+
+
 }
